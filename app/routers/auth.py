@@ -5,8 +5,14 @@ from app.database import get_db
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from app.models.user import User  # Import the User model
 from typing import List
+import jwt
+from datetime import datetime, timedelta
 
 router = APIRouter()
+
+class LoginRequest(BaseModel):
+    email: EmailStr = Field(..., description="User 's email")
+    password: str = Field(..., description="User 's password")
 
 class SignInRequest(BaseModel):
     fullname: str = Field(..., description="Full name of the user")
@@ -45,3 +51,36 @@ async def sign_in(request: SignInRequest, db: AsyncIOMotorDatabase = Depends(get
         return {"message": "User  created"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+async def verify_password(password, userPassword):
+    return true
+
+@router.post("/login")
+async def login(request: LoginRequest, db: AsyncIOMotorDatabase = Depends(get_database)):
+    email = request.email
+    password = request.password
+
+    # Check if the user exists
+    user =  db.users.find_one({"username": email})
+    if not user:
+        raise HTTPException(status_code=403, detail="Incorrect email or ")
+
+    # Verify the password
+    if not verify_password(password, user['password']):
+        raise HTTPException(status_code=403, detail="Incorrect password")
+
+    # Create JWT token
+    token = jwt.encode(
+        {"email": email, "exp": datetime.utcnow() + timedelta(days=7)},
+        "your_secret_key",  # Replace with your actual secret key
+        algorithm="HS256"
+    )
+
+    return {
+        "user_token": {
+            "user_id": str(user['_id']),  # Convert ObjectId to string
+            "user_name": user['fullname'],
+            "token": token,
+            "expire_in": "7d"
+        }
+    }
