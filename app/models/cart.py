@@ -1,11 +1,15 @@
 # app/models/cart.py
 from pydantic import BaseModel, Field
 from typing import Dict, Any
+from typing import List
 
 class CartItem(BaseModel):
-    item: Dict[str, Any]  # This can be a dictionary representing the product
-    qty: int              # Quantity of the item
-    price: float          # Total price for this item
+    item_id: str = Field(..., description="The ID of the item to add to the cart")
+    quantity: int = Field(..., description="The quantity of the item to add")
+
+class CartResponse(BaseModel):
+    user_id: str
+    items: List[CartItem]
 
 class Cart(BaseModel):
     items: Dict[str, CartItem]  # Dictionary of items in the cart, keyed by item ID
@@ -15,27 +19,5 @@ class Cart(BaseModel):
 
     class Config:
         # Allow population of the model from MongoDB documents
-        from_attributes = True
-
-class CartDB:
-    @staticmethod
-    async def get_cart_by_user_id(user_id: str):
-        db = get_db()
-        cart = await db.carts.find_one({"userId": user_id})
-        return cart
-
-    @staticmethod
-    async def update_cart_by_user_id(user_id: str, cart_data: Cart):
-        db = get_db()
-        updated_cart = await db.carts.find_one_and_update(
-            {"userId": user_id},
-            {"$set": cart_data.dict()},
-            return_document=True
-        )
-        return updated_cart
-
-    @staticmethod
-    async def create_cart(cart_data: Cart):
-        db = get_db()
-        cart = await db.carts.insert_one(cart_data.dict())
-        return cart_data
+        orm_mode = True
+    

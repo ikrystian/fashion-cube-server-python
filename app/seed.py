@@ -72,7 +72,7 @@ variants = [
 ]
 
 user = {
-   "username": 'admin@admin.com',
+   "email": 'admin@admin.com',
    "password": 'admin',
    "fullname": 'Krystian Celebican',
    "admin": True

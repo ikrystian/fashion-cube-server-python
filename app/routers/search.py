@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from app.database import get_db
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from app.models.user import User
 
 router = APIRouter()
 

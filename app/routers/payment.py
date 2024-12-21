@@ -7,7 +7,7 @@ from app.models.user import User  # Import the User model
 
 router = APIRouter()
 
-@router.post("/")
+@router.post("/success")
 async def payment_success(order_id: str, current_user: User = Depends(ensure_authenticated)):
     db = get_db()
 
