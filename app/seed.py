@@ -71,6 +71,13 @@ variants = [
     # Add more variants as needed
 ]
 
+user = {
+   "username": 'admin@admin.com',
+   "password": 'admin',
+   "fullname": 'Krystian Celebican',
+   "admin": True
+}
+
 # Insert data into the database
 def seed_database():
     db.categories.delete_many({})
@@ -93,6 +100,9 @@ def seed_database():
     # Insert variants
     db.variants.insert_many(variants)
     print("Variants seeded.")
+
+    db.users.insert_one(user)
+    print("Users seeded")
 
 if __name__ == "__main__":
     seed_database()
