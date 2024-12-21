@@ -7,7 +7,7 @@ from app.models.user import User  # Import the User model
 from typing import List
 import jwt
 from datetime import datetime, timedelta
-
+from app.configs.jwt_config import secret
 router = APIRouter()
 
 class LoginRequest(BaseModel):
@@ -72,7 +72,7 @@ async def login(request: LoginRequest, db: AsyncIOMotorDatabase = Depends(get_da
     # Create JWT token
     token = jwt.encode(
         {"email": email, "exp": datetime.utcnow() + timedelta(days=7)},
-        "your_secret_key",  # Replace with your actual secret key
+        secret,  # Replace with your actual secret key
         algorithm="HS256"
     )
 
