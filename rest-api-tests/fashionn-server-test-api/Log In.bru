@@ -1,0 +1,20 @@
+meta {
+  name: Log In
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://127.0.0.1:8000/auth/signin
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "fullname": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "securepassword",
+      "verifyPassword": "securepassword"
+  }
+}

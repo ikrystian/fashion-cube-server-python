@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "fashionn-server-test-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
