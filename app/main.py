@@ -1,5 +1,5 @@
 from fastapi import  FastAPI
-from app.routers import users, products, variants, departments, categories, checkout, payment, search, filter
+from app.routers import users, products, variants, departments, categories, checkout, payment, search, filter, auth
 
 app = FastAPI()
 
@@ -11,6 +11,7 @@ app.include_router(categories.router, prefix="/categories")
 app.include_router(checkout.router, prefix="/checkout")
 app.include_router(payment.router, prefix="/payment/success")
 app.include_router(filter.router, prefix="/filter")
+app.include_router(auth.router, prefix="/auth")
 app.include_router(search.router)
 
 @app.get("/")
