@@ -5,3 +5,7 @@ pydantic
 python-jose[cryptography]
 bcrypt
 motor
+pydantic[email]
+passlib
+jwt
+PyJWT
