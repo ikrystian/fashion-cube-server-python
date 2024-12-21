@@ -5,7 +5,14 @@ meta {
 }
 
 post {
-  url: http://127.0.0.1:8000/filter/auth/login
-  body: none
+  url: http://127.0.0.1:8000/auth/login
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "email": "admin@admin.com",
+    "password": "admin"
+  }
 }
